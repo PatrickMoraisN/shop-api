@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -10,6 +10,6 @@
   "rules": {
     "no-console": "warn",
     "no-unused-vars": "warn",
-
+    "prettier/prettier": "error",
   }
 }
