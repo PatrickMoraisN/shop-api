@@ -16,6 +16,7 @@ app.use(
       return response.status(error.statusCode).json({
         status: 'error',
         message: error.message,
+        data: error?.data,
       });
     }
 
