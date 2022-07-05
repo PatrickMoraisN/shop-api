@@ -2,6 +2,7 @@ import express, { Response, Request, NextFunction } from 'express';
 import cors from 'cors';
 import { routes } from './routes';
 import { AppError } from '@shared/errors/AppError';
+import '@shared/infra/typeorm';
 
 const app = express();
 app.use(cors());
@@ -27,4 +28,4 @@ app.use(
   },
 );
 
-export { app };
+export default app;
