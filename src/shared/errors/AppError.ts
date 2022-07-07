@@ -9,7 +9,7 @@ class AppError implements IAppError {
   public readonly statusCode: number;
   public readonly data?: string;
 
-  constructor(message: string, statusCode = 400, data: string) {
+  constructor(message: string, statusCode = 400, data?: string) {
     this.message = message;
     this.statusCode = statusCode;
     if (this.data) {
