@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ShowProductUseCase } from './ShowProductUseCase';
 
 class ShowProductController {
-  async execute(
+  async handle(
     request: Request,
     response: Response,
   ): Promise<Response<Product>> {
