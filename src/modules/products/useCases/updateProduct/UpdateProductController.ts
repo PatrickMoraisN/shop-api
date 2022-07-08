@@ -15,3 +15,5 @@ class UpdateProductController {
     return response.status(204).send();
   }
 }
+
+export { UpdateProductController };
