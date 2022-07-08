@@ -10,7 +10,7 @@ interface IRequest {
   quantity: number;
 }
 
-class ShowProductUseCase {
+class UpdateProductUseCase {
   async execute(data: IRequest): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
     const productExists = await productRepository.findOne(data.id);
@@ -32,4 +32,4 @@ class ShowProductUseCase {
   }
 }
 
-export { ShowProductUseCase };
+export { UpdateProductUseCase };
