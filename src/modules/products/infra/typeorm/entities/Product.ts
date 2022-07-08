@@ -28,7 +28,7 @@ class Product {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor(id: string, name: string, price: number, quantity: number) {
+  constructor() {
     if (!this.id) {
       this.id = uuidV4();
     }
