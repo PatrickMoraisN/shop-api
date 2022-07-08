@@ -17,7 +17,8 @@ class CreateProductUseCase {
       throw new AppError('Product already exists', 400);
     }
     const productCreated = productRepository.create(product);
-    return productRepository.save(productCreated);
+    await productRepository.save(productCreated);
+    return productCreated;
   }
 }
 

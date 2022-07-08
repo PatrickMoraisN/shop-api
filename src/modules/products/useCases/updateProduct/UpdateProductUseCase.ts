@@ -13,7 +13,9 @@ interface IRequest {
 class UpdateProductUseCase {
   async execute(data: IRequest): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
-    const productExists = await productRepository.findOne(data.id);
+    const productExists = await productRepository.findOne({
+      where: { id: data.id },
+    });
 
     if (!productExists) {
       throw new AppError('Product not found', 404);
