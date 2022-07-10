@@ -1,5 +1,6 @@
 import { User } from '@modules/users/infra/typeorm/entities/Users';
 import { AppError } from '@shared/errors/AppError';
+import { hash } from 'bcryptjs';
 import { getRepository } from 'typeorm';
 
 interface IRequest {
@@ -19,10 +20,13 @@ class CreateUserUseCase {
     if (userExists) {
       throw new AppError('User already exists');
     }
+
+    const passwordHash = await hash(password, 8);
+
     const user = usersRepository.create({
       name,
       email,
-      password,
+      password: passwordHash,
     });
 
     await usersRepository.save(user);
