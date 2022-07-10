@@ -4,9 +4,9 @@ import { DeleteUserUseCase } from './DeleteUserUseCase';
 
 class DeleteUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { userId } = request.params;
+    const { id } = request.params;
     const deleteUserUseCase = new DeleteUserUseCase();
-    await deleteUserUseCase.execute(userId);
+    await deleteUserUseCase.execute(id);
 
     return response.status(204).json({ message: 'User deleted' });
   }
