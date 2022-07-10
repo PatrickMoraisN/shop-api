@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 class ListUsersUseCase {
   async execute(): Promise<User[]> {
     const usersRepository = getRepository(User);
-    return usersRepository.find();
+    return await usersRepository.find();
   }
 }
 
