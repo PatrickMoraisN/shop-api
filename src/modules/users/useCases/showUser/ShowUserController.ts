@@ -3,9 +3,9 @@ import { ShowUserUseCase } from './ShowUserUseCase';
 
 class ShowUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { userId } = request.params;
+    const { id } = request.params;
     const showUserUseCase = new ShowUserUseCase();
-    const user = await showUserUseCase.execute(userId);
+    const user = await showUserUseCase.execute(id);
 
     return response.json(user);
   }
