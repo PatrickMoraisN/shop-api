@@ -5,6 +5,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import { DeleteUserController } from '../useCases/deleteUser/DeleteUserController';
 import { ShowUserController } from '../useCases/showUser/ShowUserController';
 import { UpdateUserController } from '../useCases/updateUser/UpdateUserController';
+import { isAuthenticated } from '@shared/infra/http/middlewares/isAuthenticated';
 
 const usersRouter = Router();
 
@@ -14,7 +15,7 @@ const deleteUserController = new DeleteUserController();
 const showUserController = new ShowUserController();
 const updateUserController = new UpdateUserController();
 
-usersRouter.get('/', listUsersController.handle);
+usersRouter.get('/', isAuthenticated, listUsersController.handle);
 
 usersRouter.post(
   '/',
