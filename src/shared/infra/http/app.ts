@@ -18,21 +18,19 @@ app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 app.use(errors());
 
-app.use(
-  (error: Error, request: Request, response: Response, next: NextFunction) => {
-    if (error instanceof AppError) {
-      return response.status(error.statusCode).json({
-        status: 'error',
-        message: error.message,
-        data: error?.data,
-      });
-    }
-
-    return response.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
+app.use((error: Error, request: Request, response: Response) => {
+  if (error instanceof AppError) {
+    return response.status(error.statusCode).json({
+      status: 'Error',
+      message: error.message,
+      data: error?.data,
     });
-  },
-);
+  }
+
+  return response.status(500).json({
+    status: 'Error',
+    message: 'Internal server error',
+  });
+});
 
 export default app;
