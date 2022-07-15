@@ -32,3 +32,5 @@ class UserToken {
     }
   }
 }
+
+export { UserToken };
