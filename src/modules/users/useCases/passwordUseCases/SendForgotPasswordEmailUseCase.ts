@@ -22,7 +22,7 @@ class SendForgotPasswordEmailUseCase {
       to: email,
       body: `<p>Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.</p>
       <p>Para redefinir sua senha, acesse o link abaixo:</p>
-      <p>http://localhost:3000/reset-password?token=${token}</p>
+      <p>http://localhost:3000/reset-password?token=${token.token}</p>
       <p>Se você não solicitou uma redefinição de senha, ignore este e-mail.</p>`,
     });
 
