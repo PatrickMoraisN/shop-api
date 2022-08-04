@@ -16,14 +16,24 @@ class SendForgotPasswordEmailUseCase {
       throw new AppError('User not found');
     }
 
-    const token = await userTokenRepository.generate(user.id);
+    const { token } = await userTokenRepository.generate(user.id);
 
     await EtherealMail.sendMail({
-      to: email,
-      body: `<p>Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.</p>
-      <p>Para redefinir sua senha, acesse o link abaixo:</p>
-      <p>http://localhost:3000/reset-password?token=${token.token}</p>
-      <p>Se você não solicitou uma redefinição de senha, ignore este e-mail.</p>`,
+      to: {
+        email: user.email,
+        name: user.name,
+      },
+      subject: '[SHOP-API Forgot Password]',
+      templateData: {
+        template: `<p>Olá, {{name}}. Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.</p>
+        <p>Para redefinir sua senha, acesse o link abaixo:</p>
+        <p>http://localhost:3000/reset-password?token={{token}}</p>
+        <p>Se você não solicitou uma redefinição de senha, ignore este e-mail.</p>`,
+        variables: {
+          name: user.name,
+          token,
+        },
+      },
     });
 
     return;
