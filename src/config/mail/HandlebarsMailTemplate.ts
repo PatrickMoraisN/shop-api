@@ -1,13 +1,5 @@
 import handlebars from 'handlebars';
-
-interface ITemplateVariable {
-  [key: string]: string | number | boolean;
-}
-
-interface IParseMailTemplate {
-  template: string;
-  variables: ITemplateVariable;
-}
+import { IParseMailTemplate } from './IParseMailTemplate';
 
 class HandlebarsMailTemplate {
   public async parse({
