@@ -28,7 +28,7 @@ class ResetPasswordUseCase {
       throw new AppError('User does not exists');
     }
 
-    const tokenCreatedAt = userToken.createdAt;
+    const tokenCreatedAt = userToken.created_at;
 
     const compareDate = addHours(tokenCreatedAt, 2);
 
