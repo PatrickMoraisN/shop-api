@@ -1,3 +1,4 @@
+import path from 'path';
 import { User } from '@modules/users/infra/typeorm/entities/Users';
 import { UsersRepository } from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import { UsersTokensRepository } from '@modules/users/infra/typeorm/repositories/UsersTokensRepository';
@@ -18,6 +19,14 @@ class SendForgotPasswordEmailUseCase {
 
     const { token } = await userTokenRepository.generate(user.id);
 
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      'views',
+      'forgot_password.hbs',
+    );
+
     await EtherealMail.sendMail({
       to: {
         email: user.email,
@@ -25,13 +34,12 @@ class SendForgotPasswordEmailUseCase {
       },
       subject: '[SHOP-API Forgot Password]',
       templateData: {
-        template: `<p>Olá, {{name}}. Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.</p>
-        <p>Para redefinir sua senha, acesse o link abaixo:</p>
-        <p>http://localhost:3000/reset-password?token={{token}}</p>
-        <p>Se você não solicitou uma redefinição de senha, ignore este e-mail.</p>`,
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
+          link: `http://localhost:3000/reset_password?token=${token}`,
           token,
+          email: 'shop-api@support.com',
         },
       },
     });
