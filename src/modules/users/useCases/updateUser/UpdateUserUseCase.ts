@@ -1,20 +1,28 @@
 import { User } from '@modules/users/infra/typeorm/entities/Users';
 import { UsersRepository } from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import { AppError } from '@shared/errors/AppError';
+import { compare, hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
 
 interface IRequest {
   id: string;
   name?: string;
   email: string;
-  password?: number;
+  password?: string;
+  old_password?: string;
 }
 
 class UpdateUserUseCase {
   async execute(user: IRequest): Promise<User> {
-    const id = user.id;
+    const {
+      id,
+      password,
+      old_password
+    } = user;
+
     const usersRepository = getCustomRepository(UsersRepository);
     const userFound = await usersRepository.findById(id);
+
     if (!userFound) {
       throw new AppError('User not found', 404);
     }
@@ -25,7 +33,25 @@ class UpdateUserUseCase {
       throw new AppError('User already exists', 400);
     }
 
-    Object.assign(userFound, user);
+    if (password && !old_password) {
+      throw new AppError('Old password is required', 401);
+    }
+
+    if (password && old_password) {
+      const isPasswordValid = compare(
+        old_password,
+        userFound.password
+      );
+
+      if (!isPasswordValid) {
+        throw new AppError('Invalid password', 401);
+      }
+    }
+
+    Object.assign(userFound, {
+      ...user,
+      password: password ? await hash(password, 8) : userFound.password
+    });
 
     const userUpdated = await usersRepository.save(userFound);
 
