@@ -9,7 +9,7 @@ class ShowUserUseCase {
     const user = await usersRepository.findById(id);
 
     if (!user) {
-      throw new AppError('User not found');
+      throw new AppError('User not found', 404);
     }
 
     return user;
