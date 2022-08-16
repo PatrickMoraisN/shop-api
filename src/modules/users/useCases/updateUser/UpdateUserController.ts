@@ -7,7 +7,8 @@ class UpdateUserController {
       name,
       email,
       password,
-      old_password
+      old_password,
+      password_confirmation,
     } = request.body;
 
     const { id } = request.user;
@@ -20,6 +21,7 @@ class UpdateUserController {
       email,
       password,
       old_password,
+      password_confirmation,
     });
 
     return response.json(user);
