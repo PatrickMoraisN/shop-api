@@ -56,7 +56,7 @@ usersRouter.delete(
 usersRouter.get('/', listUsersController.handle);
 
 usersRouter.put(
-  '/:id',
+  '/',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string(),
