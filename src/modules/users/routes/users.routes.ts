@@ -61,7 +61,14 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string(),
       email: Joi.string().email(),
-      password: Joi.string().min(6),
+      old_password: Joi.string().min(6),
+      password: Joi.string().min(6).optional(),
+      password_confirmation: Joi.string().min(6)
+        .valid(Joi.ref('password'))
+        .when('password', {
+          is: Joi.exist(),
+          then: Joi.required(),
+        }),
     },
   }),
   isAuthenticated,
