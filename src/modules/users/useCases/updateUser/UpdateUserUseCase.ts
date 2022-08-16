@@ -10,6 +10,7 @@ interface IRequest {
   email: string;
   password?: string;
   old_password?: string;
+  password_confirmation?: string;
 }
 
 class UpdateUserUseCase {
@@ -17,7 +18,8 @@ class UpdateUserUseCase {
     const {
       id,
       password,
-      old_password
+      old_password,
+      password_confirmation,
     } = user;
 
     const usersRepository = getCustomRepository(UsersRepository);
@@ -45,6 +47,12 @@ class UpdateUserUseCase {
 
       if (!isPasswordValid) {
         throw new AppError('Invalid password', 401);
+      }
+    }
+
+    if (password && password_confirmation) {
+      if (password !== password_confirmation) {
+        throw new AppError('Password confirmation does not match', 401);
       }
     }
 
