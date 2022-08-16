@@ -49,6 +49,7 @@ usersRouter.delete(
       id: Joi.string().required(),
     },
   }),
+  isAuthenticated,
   deleteUserController.handle,
 );
 
@@ -63,6 +64,7 @@ usersRouter.put(
       password: Joi.string().min(6),
     },
   }),
+  isAuthenticated,
   updateUserController.handle,
 );
 
@@ -73,6 +75,7 @@ usersRouter.get(
       id: Joi.string().required(),
     },
   }),
+  isAuthenticated,
   showUserController.handle,
 );
 
