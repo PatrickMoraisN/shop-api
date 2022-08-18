@@ -8,7 +8,7 @@ import {
 import { v4 as uuidV4 } from 'uuid';
 
 @Entity('customers')
-export class Customers {
+export class Customer {
   @PrimaryColumn('uuid')
   id: string;
 
