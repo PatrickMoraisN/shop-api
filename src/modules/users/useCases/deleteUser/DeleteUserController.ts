@@ -1,4 +1,3 @@
-import { User } from '@modules/users/infra/typeorm/entities/Users';
 import { Request, Response } from 'express';
 import { DeleteUserUseCase } from './DeleteUserUseCase';
 

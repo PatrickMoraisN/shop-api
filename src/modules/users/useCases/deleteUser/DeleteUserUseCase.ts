@@ -1,7 +1,6 @@
-import { User } from '@modules/users/infra/typeorm/entities/Users';
 import { UsersRepository } from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import { AppError } from '@shared/errors/AppError';
-import { getCustomRepository, getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
 class DeleteUserUseCase {
   async execute(id: string): Promise<void> {
