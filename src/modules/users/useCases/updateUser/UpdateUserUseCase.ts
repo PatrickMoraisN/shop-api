@@ -15,12 +15,7 @@ interface IRequest {
 
 class UpdateUserUseCase {
   async execute(user: IRequest): Promise<User> {
-    const {
-      id,
-      password,
-      old_password,
-      password_confirmation,
-    } = user;
+    const { id, password, old_password, password_confirmation } = user;
 
     const usersRepository = getCustomRepository(UsersRepository);
     const userFound = await usersRepository.findById(id);
@@ -40,10 +35,7 @@ class UpdateUserUseCase {
     }
 
     if (password && old_password) {
-      const isPasswordValid = compare(
-        old_password,
-        userFound.password
-      );
+      const isPasswordValid = compare(old_password, userFound.password);
 
       if (!isPasswordValid) {
         throw new AppError('Invalid password', 401);
@@ -58,7 +50,7 @@ class UpdateUserUseCase {
 
     Object.assign(userFound, {
       ...user,
-      password: password ? await hash(password, 8) : userFound.password
+      password: password ? await hash(password, 8) : userFound.password,
     });
 
     const userUpdated = await usersRepository.save(userFound);
