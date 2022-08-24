@@ -10,7 +10,7 @@ class ShowCustomerController {
     const { id } = request.params;
     const showCustomerUseCase = new ShowCustomerUseCase();
 
-    const customer = showCustomerUseCase.execute(id);
+    const customer = await showCustomerUseCase.execute(id);
 
     return response.json(customer);
   }
