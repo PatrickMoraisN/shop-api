@@ -53,8 +53,6 @@ usersRouter.delete(
   deleteUserController.handle,
 );
 
-usersRouter.get('/', listUsersController.handle);
-
 usersRouter.put(
   '/',
   celebrate({
@@ -63,7 +61,8 @@ usersRouter.put(
       email: Joi.string().email(),
       old_password: Joi.string().min(6),
       password: Joi.string().min(6).optional(),
-      password_confirmation: Joi.string().min(6)
+      password_confirmation: Joi.string()
+        .min(6)
         .valid(Joi.ref('password'))
         .when('password', {
           is: Joi.exist(),
