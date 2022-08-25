@@ -10,13 +10,15 @@ import { isAuthenticated } from '@shared/infra/http/middlewares/isAuthenticated'
 
 const customersRouter = Router();
 
+customersRouter.use(isAuthenticated);
+
 const listCustomersController = new ListCustomersController();
 const createCustomerController = new CreateCustomerController();
 const deleteCustomerController = new DeleteCustomerController();
 const showCustomerController = new ShowCustomerController();
 const updateCustomerController = new UpdateCustomerController();
 
-customersRouter.get('/', isAuthenticated, listCustomersController.handle);
+customersRouter.get('/', listCustomersController.handle);
 
 customersRouter.post(
   '/',
@@ -36,7 +38,6 @@ customersRouter.delete(
       id: Joi.string().required(),
     },
   }),
-  isAuthenticated,
   deleteCustomerController.handle,
 );
 
@@ -51,7 +52,6 @@ customersRouter.put(
       id: Joi.string().required(),
     },
   }),
-  isAuthenticated,
   updateCustomerController.handle,
 );
 
@@ -62,7 +62,6 @@ customersRouter.get(
       id: Joi.string().required(),
     },
   }),
-  isAuthenticated,
   showCustomerController.handle,
 );
 
