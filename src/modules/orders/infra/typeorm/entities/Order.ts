@@ -1,17 +1,18 @@
 import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 import { v4 as uuidV4 } from 'uuid';
 import {
-  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { OrdersProducts } from './OrdersProducts';
 
 @Entity('orders')
-class Product {
+class Order {
   @PrimaryColumn('uuid')
   id: string;
 
@@ -19,8 +20,10 @@ class Product {
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  @OneToMany(() => OrdersProducts, order_products => order_products.order, {
+    cascade: true,
+  })
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -35,4 +38,4 @@ class Product {
   }
 }
 
-export { Product };
+export { Order };
